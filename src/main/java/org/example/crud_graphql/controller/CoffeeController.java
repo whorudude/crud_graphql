@@ -6,7 +6,6 @@ import org.example.crud_graphql.service.CoffeeService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -14,7 +13,9 @@ import java.util.Optional;
 
 @Controller
 public class CoffeeController {
+
     private final CoffeeService coffeeService;
+
     public CoffeeController(CoffeeService coffeeService) {
         this.coffeeService = coffeeService;
     }
