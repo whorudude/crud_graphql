@@ -24,12 +24,12 @@ public class ProductController {
     }
 
     @QueryMapping
-    public List<Product> findAll() {
+    public List<Product> products() {
         return productService.findAll();
     }
 
     @QueryMapping
-    public Optional<Product> findOne(@Argument Integer id) {
+    public Optional<Product> product(@Argument Integer id) {
         return productService.findByOne(id);
     }
 
