@@ -1,61 +1,72 @@
 package org.example.crud_graphql.service;
 
-import jakarta.annotation.PostConstruct;
-import org.example.crud_graphql.model.Category;
-import org.example.crud_graphql.model.Product;
+import org.example.crud_graphql.model.entity.Product;
 import org.example.crud_graphql.model.input.CreateProductInput;
 import org.example.crud_graphql.model.input.UpdateProductInput;
+import org.example.crud_graphql.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductService {
 
-    private final List<Product> products = new ArrayList<>();
-    private Integer id = 0;
+    private final ProductRepository repository;
+
+    @Autowired
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Product> findAll() {
-        return products;
+        return repository.findAll();
     }
 
     public Optional<Product> findById(Integer id) {
-        return products.stream()
-                .filter(product -> product.id() == id)
-                .findFirst();
+        return repository.findById(id);
     }
 
     public Product create(CreateProductInput input) {
-        Product product = new Product(id++, input.name(), input.price(), input.amount(), input.onsite(), input.category());
-        products.add(product);
-        return product;
+        Product product = new Product();
+        product.setName(input.name());
+        product.setPrice(input.price());
+        product.setAmount(input.amount());
+        product.setOnsite(input.onsite());
+        product.setCategory(input.category());
+        return repository.save(product);
     }
 
     public Product update(UpdateProductInput input) {
-        Optional<Product> optional = findById(id);
-        if (optional.isPresent()) {
-            Product updatedProduct = new Product(id, input.name(), input.price(), input.amount(), input.onsite(), input.category());
-            int index = products.indexOf(optional.get());
-            products.set(index, updatedProduct);
-            return updatedProduct;
-        } else {
-            throw new IllegalArgumentException("Invalid product ID: " + id);
+        Product product = repository.findById(input.id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + input.id()));
+
+        if (input.name() != null) {
+            product.setName(input.name());
         }
+        if (input.price() != null) {
+            product.setPrice(input.price());
+        }
+        if (input.amount() != null) {
+            product.setAmount(input.amount());
+        }
+        if (input.onsite() != null) {
+            product.setOnsite(input.onsite());
+        }
+        if (input.category() != null) {
+            product.setCategory(input.category());
+        }
+
+        return repository.save(product);
     }
 
     public Product deleteById(Integer id) {
-        Product product = findById(id)
+        Product product = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
-        products.remove(product);
+
+        repository.delete(product);
         return product;
     }
-
-    @PostConstruct
-    private void init() {
-        products.add(new Product(id++, "Wireless Mouse", 25.99, 100, true, Category.ELECTRONICS));
-        products.add(new Product(id++, "Organic Green Tea", 9.50, 50, false, Category.FOOD));
-        products.add(new Product(id++, "Yoga Mat", 19.99, 75, true, Category.TOYS));
-    }
 }
+

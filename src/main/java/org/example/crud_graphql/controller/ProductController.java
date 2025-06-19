@@ -1,6 +1,6 @@
 package org.example.crud_graphql.controller;
 
-import org.example.crud_graphql.model.Product;
+import org.example.crud_graphql.model.entity.Product;
 import org.example.crud_graphql.model.input.CreateProductInput;
 import org.example.crud_graphql.model.input.UpdateProductInput;
 import org.example.crud_graphql.service.ProductService;
