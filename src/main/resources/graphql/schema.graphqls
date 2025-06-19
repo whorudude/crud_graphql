@@ -32,6 +32,11 @@ enum Category {
     BOOKS
 }
 
+input ProductFilter {
+    category: Category
+    onsite: Boolean
+}
+
 type Query {
     products: [Product]!
     product(id: ID): Product
@@ -44,3 +49,11 @@ type Mutation {
 
     deleteProduct(id: ID!): Product!
 }
+
+
+#query {
+#  filterProducts(filter: { category: CLOTHING, onsite: true }) {
+#    id
+#    name
+#  }
+#}

@@ -2,6 +2,7 @@ package org.example.crud_graphql.controller;
 
 import org.example.crud_graphql.model.entity.Product;
 import org.example.crud_graphql.model.input.CreateProductInput;
+import org.example.crud_graphql.model.input.ProductFilter;
 import org.example.crud_graphql.model.input.UpdateProductInput;
 import org.example.crud_graphql.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProductController {
@@ -31,6 +33,11 @@ public class ProductController {
     @QueryMapping
     public Optional<Product> product(@Argument Integer id) {
         return productService.findById(id);
+    }
+
+    @QueryMapping
+    public List<Product> filterProducts(@Argument ProductFilter filter) {
+        return productService.productFilter(filter);
     }
 
     @MutationMapping

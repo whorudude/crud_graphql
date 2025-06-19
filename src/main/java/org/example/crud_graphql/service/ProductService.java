@@ -2,6 +2,7 @@ package org.example.crud_graphql.service;
 
 import org.example.crud_graphql.model.entity.Product;
 import org.example.crud_graphql.model.input.CreateProductInput;
+import org.example.crud_graphql.model.input.ProductFilter;
 import org.example.crud_graphql.model.input.UpdateProductInput;
 import org.example.crud_graphql.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,13 @@ public class ProductService {
 
         repository.delete(product);
         return product;
+    }
+
+    public List<Product> productFilter(ProductFilter filter) {
+        return repository.findAll().stream()
+                .filter(p -> filter.category() == null || p.getCategory() == filter.category())
+                .filter(p -> filter.onsite() == null || p.getOnsite().equals(filter.onsite()))
+                .toList();
     }
 }
 
