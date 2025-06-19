@@ -1,20 +1,46 @@
-type Coffee {
+type Product {
     id: ID!
     name: String
-    size: Size
+    price: Float
+    amount: Int
+    onsite: Boolean
+    category: Category
 }
 
-enum Size {
-    SHORT, TALL, GRANDE, VENTI
+input CreateProductInput {
+    name: String!
+    price: Float!
+    amount: Int!
+    onsite: Boolean!
+    category: String!
+}
+
+input UpdateProductInput {
+    id: ID!
+    name: String
+    price: Float
+    amount: Int
+    onsite: Boolean
+    category: String
+}
+
+enum Category {
+    CLOTHING
+    ELECTRONICS
+    FOOD
+    TOYS
+    BOOKS
 }
 
 type Query {
-    findAll: [Coffee]!
-    findOne(id: ID): Coffee
+    findAllProducts: [Product]!
+    findOneProduct(id: ID): Product
 }
 
 type Mutation {
-    createCoffee(name: String!, size: Size!): Coffee!
-    deleteOne(id: ID!): Coffee!
-    updateCoffee(id: ID, name: String!, size: Size!): Coffee!
+    createProduct(input: CreateProductInput!): Product!
+
+    updateProduct(input: UpdateProductInput!): Product!
+
+    deleteProduct(id: ID!): Product!
 }

@@ -1,0 +1,50 @@
+package org.example.crud_graphql.controller;
+
+import org.example.crud_graphql.model.Product;
+import org.example.crud_graphql.model.input.CreateProductInput;
+import org.example.crud_graphql.model.input.UpdateProductInput;
+import org.example.crud_graphql.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+
+import java.util.List;
+import java.util.Optional;
+
+@Controller
+public class ProductController {
+
+    private ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @QueryMapping
+    public List<Product> findAll() {
+        return productService.findAll();
+    }
+
+    @QueryMapping
+    public Optional<Product> findOne(@Argument Integer id) {
+        return productService.findByOne(id);
+    }
+
+    @MutationMapping
+    public Product create(@Argument CreateProductInput input) {
+        return productService.create(input);
+    }
+
+    @MutationMapping
+    public Product deleteOne(@Argument Integer id) {
+        return productService.delete(id);
+    }
+
+    @MutationMapping
+    public Product updateCoffee(@Argument UpdateProductInput input) {
+        return productService.update(input);
+    }
+}
