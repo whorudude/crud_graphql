@@ -21,7 +21,7 @@ public class ProductService {
         return products;
     }
 
-    public Optional<Product> findByOne(Integer id) {
+    public Optional<Product> findById(Integer id) {
         return products.stream()
                 .filter(product -> product.id() == id)
                 .findFirst();
@@ -34,7 +34,7 @@ public class ProductService {
     }
 
     public Product update(UpdateProductInput input) {
-        Optional<Product> optional = findByOne(id);
+        Optional<Product> optional = findById(id);
         if (optional.isPresent()) {
             Product updatedProduct = new Product(id, input.name(), input.price(), input.amount(), input.onsite(), input.category());
             int index = products.indexOf(optional.get());
@@ -45,8 +45,8 @@ public class ProductService {
         }
     }
 
-    public Product delete(Integer id) {
-        Product product = findByOne(id)
+    public Product deleteById(Integer id) {
+        Product product = findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + id));
         products.remove(product);
         return product;

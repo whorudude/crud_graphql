@@ -30,7 +30,7 @@ public class ProductController {
 
     @QueryMapping
     public Optional<Product> product(@Argument Integer id) {
-        return productService.findByOne(id);
+        return productService.findById(id);
     }
 
     @MutationMapping
@@ -40,7 +40,7 @@ public class ProductController {
 
     @MutationMapping
     public Product deleteOne(@Argument Integer id) {
-        return productService.delete(id);
+        return productService.deleteById(id);
     }
 
     @MutationMapping
