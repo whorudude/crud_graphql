@@ -1,0 +1,51 @@
+enum Category {
+    CLOTHING
+    ELECTRONICS
+    FOOD
+    TOYS
+    BOOKS
+}
+type Product {
+    id: ID!
+    name: String
+    price: Float
+    amount: Int
+    onsite: Boolean
+    category: Category
+}
+input CreateProductInput {
+    name: String!
+    price: Float!
+    amount: Int!
+    onsite: Boolean!
+    category: Category!
+}
+
+
+input UpdateProductInput {
+    id: ID!
+    name: String
+    price: Float
+    amount: Int
+    onsite: Boolean
+    category: Category
+}
+input ProductFilter {
+    category: Category
+    onsite: Boolean
+}
+type Query {
+    products: [Product]!
+    product(id: ID): Product
+    filterProducts(input: ProductFilter!): [Product]!
+}
+
+type Mutation {
+    createProduct(input: CreateProductInput!): Product!
+
+    updateProduct(input: UpdateProductInput!): Product!
+
+    deleteProduct(id: ID!): Product!
+}
+
+
