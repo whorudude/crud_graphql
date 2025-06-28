@@ -1,4 +1,4 @@
-package org.example.crud_graphql.controller;
+package org.example.crud_graphql.resolver;
 
 import org.example.crud_graphql.model.entity.Product;
 import org.example.crud_graphql.model.input.CreateProductInput;
@@ -15,23 +15,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ProductController {
+public class ProductResolver {
 
     private ProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductResolver(ProductService productService) {
         this.productService = productService;
-    }
-
-    @QueryMapping
-    public List<Product> products() {
-        return productService.findAll();
     }
 
     @QueryMapping
     public Optional<Product> product(@Argument Integer id) {
         return productService.findById(id);
+    }
+
+    @QueryMapping
+    public List<Product> products() {
+        return productService.findAll();
     }
 
     @QueryMapping

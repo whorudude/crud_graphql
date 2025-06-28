@@ -20,8 +20,6 @@ input CreateProductInput {
     onsite: Boolean!
     category: Category!
 }
-
-
 input UpdateProductInput {
     id: ID!
     name: String
@@ -39,7 +37,6 @@ type Query {
     product(id: ID): Product
     filterProducts(input: ProductFilter!): [Product]!
 }
-
 type Mutation {
     createProduct(input: CreateProductInput!): Product!
 

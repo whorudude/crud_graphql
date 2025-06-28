@@ -8,7 +8,7 @@ _src/main/java/org/example/crud_graphql/CrudGraphqlApplication.java_
 pe urmatorul link putem initia requesturile catre serviciul nostru pentru a testa
 >http://localhost:8080/graphiql?path=/graphql
 
-exemple de requesturi posibile:
+exemple de request-uri posibile:
 
 ```graphql
 query products{
