@@ -9,5 +9,4 @@ public class CrudGraphqlApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CrudGraphqlApplication.class, args);
 	}
-
 }
